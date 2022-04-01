@@ -20,11 +20,11 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED COMPONENTS system random)
 find_package(Eigen REQUIRED)
 find_package(octomap REQUIRED)
-find_package(PCL 1.7 REQUIRED)
+find_package(PCL 1.8 REQUIRED)
 find_package(dynamicEDT3D REQUIRED)
 find_package(OpenMP)
-
-set(dynamicEDT3D_LIBRARIES "/opt/ros/indigo/lib/libdynamicedt3d.so")
+# it is unnecessary now 20220401
+#set(dynamicEDT3D_LIBRARIES "/opt/ros/indigo/lib/libdynamicedt3d.so")
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -56,7 +56,6 @@ catkin_package(
   CATKIN_DEPENDS tf
   DEPENDS octomap dynamicEDT3D
 )
-set(DYNAMICEDT3D_LIBRARIES "/opt/ros/indigo/lib/libdynamicedt3d.so")
 
 include_directories(
   include

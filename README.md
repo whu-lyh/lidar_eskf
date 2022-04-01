@@ -12,6 +12,13 @@ Install ros octomap:
 sudo apt-get install ros-indigo-octomap*
 ```
 
+Other trouble:
+```
+By not providing "FinddynamicEDT3D.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "dynamicEDT3D", but CMake did not find one
+```
+
 Create workspace ```test_ws```, fetch repositories and build: 
 
 ```bash 

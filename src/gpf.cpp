@@ -260,27 +260,24 @@ void GPF::pozyx_callback(const geometry_msgs::PoseWithCovariance &msg) {
 }
 
 void GPF::downsample() {
-    pcl::PointCloud<pcl::PointXYZ>::Ptr unif_cloud = pcl::PointCloud<pcl::PointXYZ>::Ptr (new pcl::PointCloud<pcl::PointXYZ>);
-
+    pcl::PointCloud<pcl::PointXYZ>::Ptr unif_cloud(new pcl::PointCloud<pcl::PointXYZ>);
     // down sampling
     pcl::PointCloud<int> sampled_indices;
     pcl::UniformSampling<pcl::PointXYZ> uniform_sampling;
     uniform_sampling.setInputCloud(_cloud_ptr);
     uniform_sampling.setRadiusSearch(_cloud_resol);
-    uniform_sampling.compute(sampled_indices);
-    pcl::copyPointCloud (*_cloud_ptr, sampled_indices.points, *unif_cloud);
+    uniform_sampling.filter(*unif_cloud);
 
     _cloud_ptr->clear();
     for(pcl::PointCloud<pcl::PointXYZ>::iterator it = unif_cloud->begin();
-		                                 it != unif_cloud->end();
-						 it ++) {
+		it != unif_cloud->end();
+		it ++) {
 	double dist = sqrt(it->x * it->x + it->y * it->y + it->z * it->z);
 
 	if (dist > 0.9 && dist < _cloud_range) {
 	    _cloud_ptr->push_back(*it);
 	}
     }
-
     ROS_INFO_STREAM_THROTTLE(1.0, "GPF: Cloud size " << int(_cloud_ptr->size()));
 }
 
